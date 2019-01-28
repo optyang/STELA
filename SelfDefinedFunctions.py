@@ -19,8 +19,10 @@ def FUN_STELA(N, K, A, y, mu):
         Sec. IV-C of [Y. Yang, and M. Pesavento, "A unified successive pseudoconvex approximation framework", IEEE Transactions on Signal Processing, 2017]        
 
     Input Parameters:
+        N : the number of measurements
+        K : the number of features
         A : N * K,  dictionary matrix
-        y : K * 1,  noisy observation
+        y : N * 1,  noisy observation
         mu: scalar, regularization gain
         
     Definitions:
@@ -28,8 +30,8 @@ def FUN_STELA(N, K, A, y, mu):
         g(x) = mu * ||x||_1
         
     Output Parameters:
+        x: K * 1, the optimal variable = argmin {f(x) + g(x)}
         objval: objective function value = f + g
-        x: the optimal variable = argmin {f(x) + g(x)}
         error specifies the solution precision, defined in (53) of the reference
         
     '''
