@@ -38,7 +38,7 @@ y  = np.dot(A, x0) + v # measurement
 mu = 0.01*np.linalg.norm(np.dot(y, A), np.inf)
 
 '''call STELA'''
-objval, x, error = FUN_STELA(N, K, A, y, mu)
+objval, x, error = FUN_STELA(A, y, mu)
 
 '''check output'''
 '''compare the original signal and the estimated signal'''
