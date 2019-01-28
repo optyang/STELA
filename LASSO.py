@@ -2,11 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from SelfDefinedFunctions import FUN_STELA
 
-N = 1000; # number of rows(measurements)
-K = 2000; # number of features (variable dimension)
+N = 1000; # number of rows of A (measurements)
+K = 2000; # number of columns of A (features)
 
-#N = int(input("Please enter the number of measurements: "))
-#K = int(input("Please enter the number of features: "))
+# input your own number of measurements and features
+# N = int(input("Please enter the number of measurements: "))
+# K = int(input("Please enter the number of features: "))
 
 '''
 generate measurements: y = A * x0 + v
