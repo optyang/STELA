@@ -40,7 +40,7 @@ def FUN_STELA(A, y, mu):
     N                 = A.shape[0]
     K                 = A.shape[1]
     y_dim             = y.shape[0]
-    mu_dim            = mu.shape[0]
+#    mu_dim            = mu.shape[0]
     AtA_diag          = np.sum(np.multiply(A, A), axis = 0) # diagonal elements of A'*A
     mu_vec            = mu * np.ones(K)
     mu_vec_normalized = np.divide(mu_vec, AtA_diag)
