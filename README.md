@@ -15,16 +15,14 @@ Reference:
 
 
 Input Parameters:
-
-    N : number of measurements;
-
-    K : number of features;
+   
+    A :      N * K matrix,  dictionary;
     
-    A : N * K,  dictionary matrix;
+    y :      K * 1 vector,  noisy observation;
     
-    y : K * 1,  noisy observation;
+    mu:      scalar, regularization gain;
     
-    mu: scalar, regularization gain;
+    MaxIter: maximum number of iterations, default = 1000;
 
 
 Definitions:
@@ -38,6 +36,6 @@ Output Parameters:
     
     objval: objective function value = f + g;
     
-    x: K * 1, the optimal variable = argmin {f(x) + g(x)};
+    x: K * 1 vector, the optimal variable that minimizes {f(x) + g(x)};
     
-    error specifies the solution precision, defined in (53) of the reference;
+    error:  specifies the solution precision (a smaller error implies a better solution);
