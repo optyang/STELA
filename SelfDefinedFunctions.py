@@ -22,7 +22,7 @@ def FUN_STELA(A, y, mu, MaxIter = 1000):
         A :      N * K matrix,  dictionary
         y :      N * 1 vector,  noisy observation
         mu:      positive scalar, regularization gain
-        MaxIter: maximum number of iterations, default = 1000
+        MaxIter: (optional) maximum number of iterations, default = 1000
         
     Definitions:
         N : the number of measurements
