@@ -9,7 +9,7 @@ def FUN_SoftThresholding(q, t, K):
     x = np.maximum(q - t, np.zeros(K)) - np.maximum(-q - t,np.zeros(K));
     return x
 
-def FUN_STELA(A, y, mu):
+def FUN_STELA(A, y, mu, MaxIter = 1000):
 
     '''
     STELA algorithm solves the following optimization problem:
@@ -19,35 +19,32 @@ def FUN_STELA(A, y, mu):
         Sec. IV-C of [Y. Yang, and M. Pesavento, "A unified successive pseudoconvex approximation framework", IEEE Transactions on Signal Processing, 2017]        
 
     Input Parameters:
-        N : the number of measurements
-        K : the number of features
-        A : N * K,  dictionary matrix
-        y : N * 1,  noisy observation
-        mu: scalar, regularization gain
+        A :      N * K matrix,  dictionary
+        y :      N * 1 vector,  noisy observation
+        mu:      positive scalar, regularization gain
+        MaxIter: maximum number of iterations, default = 1000
         
     Definitions:
+        N : the number of measurements
+        K : the number of features
         f(x) = 0.5 * ||y - A * x||^2
         g(x) = mu * ||x||_1
         
     Output Parameters:
-        x: K * 1, the optimal variable = argmin {f(x) + g(x)}
+        x:      K * 1 vector, the optimal variable that minimizes {f(x) + g(x)}
         objval: objective function value = f + g
-        error specifies the solution precision, defined in (53) of the reference
+        error:  specifies the solution precision (a smaller error implies a better solution), defined in (53) of the reference
         
     '''
     
     '''precomputation'''
-    N                 = A.shape[0]
     K                 = A.shape[1]
-    y_dim             = y.shape[0]
-#    mu_dim            = mu.shape[0]
     AtA_diag          = np.sum(np.multiply(A, A), axis = 0) # diagonal elements of A'*A
     mu_vec            = mu * np.ones(K)
     mu_vec_normalized = np.divide(mu_vec, AtA_diag)
 
     '''initialization'''
-    MaxIter  = 100;                     # maximum number of iterations
-    x        = np.zeros(K)              # initial point
+    x        = np.zeros(K)              # x is initialized as all zeros
     objval   = np.zeros(MaxIter + 1)    # objvective function value vs number of iterations
     error    = np.zeros(MaxIter + 1)    # solution precision vs number of iterations    
     CPU_time = np.zeros(MaxIter + 1)    # CPU time (cumulative with respect to iterations)
@@ -62,7 +59,11 @@ def FUN_STELA(A, y, mu):
     g         = mu * np.linalg.norm(x, 1)    
     objval[0] = f + g    
     error[0]  = np.linalg.norm(np.absolute(f_gradient - np.minimum(np.maximum(f_gradient - x,-mu * np.ones(K)), mu * np.ones(K))), np.inf) # cf. (53) of reference
-#    print("Iteration ", 0, ": function value  ", objval[0], " and error ", error[0])    
+
+    '''print initial results'''
+    IterationOutput = "{0:9}|{1:10}|{2:15}|{3:15}|{4:15}"
+    print(IterationOutput.format("Iteration", "stepsize", "objval", "error", "CPU time"))
+    print(IterationOutput.format(0, 'N/A', format(objval[0], '.7f'), format(error[0], '.7f'), format(CPU_time[0], '.7f')))
 
     '''formal iterations'''
     for t in range(0 , MaxIter):
@@ -92,14 +93,17 @@ def FUN_STELA(A, y, mu):
         objval [t+1] = f + g
         error[t+1]   = np.linalg.norm(np.absolute(f_gradient - np.minimum(np.maximum(f_gradient - x, -mu_vec), mu_vec)), np.inf)
         
+        '''print intermediate results'''
+        print(IterationOutput.format(t + 1, format(stepsize,'.4f'), format(objval[t+1],'.7f'), format(error[t+1],'.7f'), format(CPU_time[t+1],'.7f')))
+
         '''check stop criterion'''
         if error[t+1] < 1e-6:
-            objval    = objval[0 : t + 1]
-            CPU_time  = CPU_time[0 : t + 1]
-            error     = error[0 : t + 1]
-            break
+            objval    = objval[0 : t + 2]
+            CPU_time  = CPU_time[0 : t + 2]
+            error     = error[0 : t + 2]
+            print('Status: successful')
+            break        
         
-#        print("Iteration ", t+1, ": stepsize ", stepsize, ", function value  ", objval[t+1], " error ", error[t+1], " and time ", CPU_time[t+1])    
-        
+        if t == MaxIter-1:
+            print('Status: desired precision is not achieved. More iterations are needed.')
     return objval, x, error
-#    return objval

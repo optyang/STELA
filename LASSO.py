@@ -5,21 +5,18 @@ from SelfDefinedFunctions import FUN_STELA
 N = 1000; # number of rows of A (measurements)
 K = 2000; # number of columns of A (features)
 
-# input your own number of measurements and features
-# N = int(input("Please enter the number of measurements: "))
-# K = int(input("Please enter the number of features: "))
+'''disable to input your own number of measurements and features'''
+#N = int(input("Please enter the number of measurements: "))
+#K = int(input("Please enter the number of features: "))
 
-'''
-generate measurements: y = A * x0 + v
-'''
-
+'''generate measurements: y = A * x0 + v'''
 A = np.random.normal(0, 0.1, (N, K))
-# =============================================================================
+## =============================================================================
 ## normalize each row of A
-# A_row_norm = np.linalg.norm(A, axis=1)
-# A_row_norm_matrix = np.matrix.transpose(np.kron(A_row_norm,np.ones((K,1))))
-# A = np.divide(A, A_row_norm_matrix)
-# =============================================================================
+#A_row_norm = np.linalg.norm(A, axis=1)
+#A_row_norm_matrix = np.matrix.transpose(np.kron(A_row_norm,np.ones((K,1))))
+#A = np.divide(A, A_row_norm_matrix)
+## =============================================================================
 
 '''generate the sparse vector'''
 density          = 0.01 # density of the sparse signal
@@ -38,9 +35,10 @@ y  = np.dot(A, x0) + v # measurement
 mu = 0.01*np.linalg.norm(np.dot(y, A), np.inf)
 
 '''call STELA'''
-objval, x, error = FUN_STELA(A, y, mu)
+MaxIter = 100 # maximum number of iterations, optional input
+objval, x, error = FUN_STELA(A, y, mu, MaxIter)
 
-'''check output'''
+'''plot output'''
 '''compare the original signal and the estimated signal'''
 plt.plot(np.linspace(1, K, K), x0, 'b-x', label = "original signal")
 plt.plot(np.linspace(1, K, K), x, 'r-o', label = "estimated signal")
