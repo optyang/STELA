@@ -5,7 +5,7 @@ from SelfDefinedFunctions import FUN_STELA
 N = 1000; # number of rows of A (measurements)
 K = 2000; # number of columns of A (features)
 
-'''disable to input your own number of measurements and features'''
+'''disable the following two lines to input your own number of measurements and features'''
 #N = int(input("Please enter the number of measurements: "))
 #K = int(input("Please enter the number of features: "))
 
