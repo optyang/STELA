@@ -36,6 +36,6 @@ Output Parameters:
     
     objval: objective function value = f + g;
     
-    x: K * 1 vector, the optimal variable that minimizes {f(x) + g(x)};
+    x:      K * 1 vector, the optimal variable that minimizes {f(x) + g(x)};
     
     error:  specifies the solution precision (a smaller error implies a better solution);
