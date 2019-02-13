@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from SelfDefinedFunctions import FUN_STELA
+from SelfDefinedFunctions import stela_lasso
 
 N = 1000; # number of rows of A (measurements)
 K = 2000; # number of columns of A (features)
@@ -36,7 +36,7 @@ mu = 0.01*np.linalg.norm(np.dot(y, A), np.inf)
 
 '''call STELA'''
 MaxIter = 100 # maximum number of iterations, optional input
-objval, x, error = FUN_STELA(A, y, mu, MaxIter)
+objval, x, error = stela_lasso(A, y, mu, MaxIter)
 
 '''plot output'''
 '''compare the original signal and the estimated signal'''

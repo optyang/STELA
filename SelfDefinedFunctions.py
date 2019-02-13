@@ -1,7 +1,7 @@
 import numpy as np
 import time
 
-def FUN_SoftThresholding(q, t, K):  
+def soft_thresholding(q, t, K):  
     '''
     The soft-thresholding function returns the optimal x that minimizes 
         min_x 0.5 * x^2 - q * x + t * |x|
@@ -9,7 +9,7 @@ def FUN_SoftThresholding(q, t, K):
     x = np.maximum(q - t, np.zeros(K)) - np.maximum(-q - t,np.zeros(K));
     return x
 
-def FUN_STELA(A, y, mu, MaxIter = 1000):
+def stela_lasso(A, y, mu, MaxIter = 1000):
 
     '''
     STELA algorithm solves the following optimization problem:
@@ -35,7 +35,14 @@ def FUN_STELA(A, y, mu, MaxIter = 1000):
         objval: objective function value = f + g
         error:  specifies the solution precision (a smaller error implies a better solution), defined in (53) of the reference
         
-    '''
+    '''    
+    if mu <= 0:
+        print('mu must be positive!')
+        return
+    elif A.shape[0] != y.shape[0]:
+        print('The number of rows in A must be equal to the dimension of y!')
+        return
+        
     
     '''precomputation'''
     K                 = A.shape[1]
@@ -70,7 +77,7 @@ def FUN_STELA(A, y, mu, MaxIter = 1000):
         CPU_time[t+1] = time.time()
         
         '''approximate problem, cf. (49) of reference'''    
-        Bx = FUN_SoftThresholding(x - np.divide(f_gradient,AtA_diag), mu_vec_normalized, K) 
+        Bx = soft_thresholding(x - np.divide(f_gradient,AtA_diag), mu_vec_normalized, K) 
     
         x_dif  = Bx - x
         Ax_dif = np.dot(A , x_dif) # A * (Bx - x)
