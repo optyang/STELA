@@ -77,13 +77,13 @@ def stela_lasso(A, y, mu, MaxIter = 1000):
         CPU_time[t+1] = time.time()
         
         '''approximate problem, cf. (49) of reference'''    
-        Bx = soft_thresholding(x - np.divide(f_gradient,AtA_diag), mu_vec_normalized, K) 
+        Bx = soft_thresholding(x - np.divide(f_gradient, AtA_diag), mu_vec_normalized, K) 
     
         x_dif  = Bx - x
         Ax_dif = np.dot(A , x_dif) # A * (Bx - x)
     
         '''stepsize, cf. (50) of reference'''
-        stepsize_numerator   = -(np.dot(residual,Ax_dif)+np.dot(mu_vec,np.absolute(Bx)-np.absolute(x)))
+        stepsize_numerator   = -(np.dot(residual, Ax_dif) + np.dot(mu_vec, np.absolute(Bx) - np.absolute(x)))
         stepsize_denominator = np.dot(Ax_dif,Ax_dif)
         stepsize             = np.maximum(np.minimum(stepsize_numerator / stepsize_denominator, 1), 0)
 
