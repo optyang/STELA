@@ -4,8 +4,7 @@ STELA algorithm for sparsity regularized linear regression (LASSO)
 
 STELA algorithm solves the following optimization problem:
 
-    min_x {0.5*||y - A * x||^2 + mu * ||x||_1}
-            
+![equation](https://latex.codecogs.com/svg.latex?\dpi{300}&space;\min_{x}&space;\frac{1}{2}\Vert&space;y&space;-&space;Ax\Vert_2^2&space;&plus;&space;\mu\Vert&space;x&space;\Vert_1)
             
 It is based on the parallel best-response (Jacobi) algorithm with guaranteed convergence. It exhibits a fast, reliable and stable performance.
 
@@ -26,16 +25,16 @@ Input Parameters:
 
 
 Definitions:
+
+![equation](https://latex.codecogs.com/svg.latex?\dpi{300}&space;f(x)&space;=&space;\frac{1}{2}\Vert&space;y&space;-&space;A&space;x\Vert^2)
     
-    f(x) = 0.5 * ||y - A * x||^2;
-    
-    g(x) = mu * ||x||_1;
+![equation](https://latex.codecogs.com/svg.latex?\dpi{300}&space;g(x)&space;=&space;\mu&space;\Vert&space;x&space;\Vert_1)
 
 
 Output Parameters:
     
-    objval: objective function value = f + g;
+    objval: objective function value (f + g);
     
-    x:      K * 1 vector, the optimal variable that minimizes {f(x) + g(x)};
+    x:      K * 1 vector, the optimal variable
     
     error:  specifies the solution precision (a smaller error implies a better solution);
