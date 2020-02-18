@@ -9,8 +9,8 @@ STELA algorithm solves the following optimization problem:
 It is based on the parallel best-response (Jacobi) algorithm with guaranteed convergence. It exhibits a fast, reliable and stable performance.
 
 
-Reference:
-    Sec. IV-C of [Y. Yang, and M. Pesavento, "A unified successive pseudoconvex approximation framework", IEEE Transactions on Signal Processing, 2017]        
+Reference: Sec. IV-C of
+     Y. Yang, and M. Pesavento, "A unified successive pseudoconvex approximation framework", *IEEE Transactions on Signal Processing*, vol. 65, no. 13, pp. 3313-3328, Jul. 2017. URL: [IEEE](https://ieeexplore.ieee.org/document/7882695), [Arxiv](https://arxiv.org/abs/1506.04972)
 
 
 Input Parameters:
